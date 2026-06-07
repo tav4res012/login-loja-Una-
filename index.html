@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrar - Unaí</title>
+    <title>Acesso - Unaí</title>
     
-    <!-- Fontes Oficiais da Identidade -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
@@ -20,7 +19,7 @@
             --areia-suave: #E8DCC8;     
             --azul-escuro: #0F2A36;     
             --verde-profundo: #1F4D4F;  
-            --surface-glass: rgba(245, 242, 236, 0.55); 
+            --surface-glass: rgba(245, 242, 236, 0.6); 
             
             --font-principal: 'Cinzel', serif;
             --font-secundaria: 'Montserrat', sans-serif;
@@ -50,7 +49,7 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(15, 42, 54, 0.1);
-            padding: 40px 30px;
+            padding: 35px 25px;
             border-radius: 16px;
             width: 100%;
             max-width: 420px;
@@ -59,52 +58,81 @@
         }
 
         .login-header img {
-            height: 65px;
+            height: 60px;
             object-fit: contain;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .login-header h2 {
             font-family: var(--font-principal);
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 400;
             color: var(--azul-escuro);
             letter-spacing: 1px;
-            margin-bottom: 5px;
+            margin-bottom: 20px;
         }
 
-        .login-header p {
+        /* Sistema de Abas (Alternar entre Entrar e Cadastrar) */
+        .abas-container {
+            display: flex;
+            border-bottom: 2px solid rgba(15, 42, 54, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .aba {
+            flex: 1;
+            padding: 10px 0;
+            background: transparent;
+            border: none;
+            font-family: var(--font-secundaria);
             font-size: 0.85rem;
-            color: var(--verde-profundo);
-            margin-bottom: 30px;
-            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: rgba(15, 42, 54, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        /* Campos de Entrada */
+        .aba.ativa {
+            color: var(--azul-escuro);
+            border-bottom: 2px solid var(--azul-escuro);
+            margin-bottom: -2px;
+        }
+
+        /* Formulários */
+        .form-conteudo {
+            display: none;
+        }
+
+        .form-conteudo.ativo {
+            display: block;
+        }
+
         .input-grupo {
             text-align: left;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .input-grupo label {
             display: block;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: var(--azul-escuro);
         }
 
         .input-grupo input {
             width: 100%;
-            height: 48px;
+            height: 45px;
             padding: 0 16px;
             background: rgba(255, 255, 255, 0.5);
             border: 1px solid rgba(15, 42, 54, 0.15);
             border-radius: 8px;
             font-family: var(--font-secundaria);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--azul-escuro);
             outline: none;
             transition: all 0.3s ease;
@@ -117,56 +145,87 @@
         }
 
         /* Botões */
-        .btn-entrar {
+        .btn-acao {
             width: 100%;
-            height: 50px;
+            height: 48px;
             background-color: var(--azul-escuro);
             color: var(--bg-bege);
             border: none;
             border-radius: 8px;
             text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            box-shadow: 0 4px 15px rgba(15, 42, 54, 0.15);
-            margin-bottom: 15px;
-            margin-top: 10px;
-        }
-
-        .btn-entrar:hover {
-            background-color: var(--verde-profundo);
-            transform: translateY(-1px);
-        }
-
-        .btn-cadastrar {
-            width: 100%;
-            height: 50px;
-            background-color: transparent;
-            color: var(--azul-escuro);
-            border: 1px solid var(--azul-escuro);
-            border-radius: 8px;
-            text-transform: uppercase;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             letter-spacing: 2px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(15, 42, 54, 0.15);
+            margin-top: 5px;
+            margin-bottom: 20px;
         }
 
-        .btn-cadastrar:hover {
-            background-color: rgba(15, 42, 54, 0.05);
+        .btn-acao:hover {
+            background-color: var(--verde-profundo);
+            transform: translateY(-1px);
+        }
+
+        /* Divisor "OU" */
+        .divisor {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: rgba(15, 42, 54, 0.4);
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .divisor::before, .divisor::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(15, 42, 54, 0.15);
+        }
+
+        .divisor:not(:empty)::before { margin-right: .5em; }
+        .divisor:not(:empty)::after { margin-left: .5em; }
+
+        /* Botão do Google Moderno */
+        .btn-google {
+            width: 100%;
+            height: 48px;
+            background-color: #ffffff;
+            color: #757575;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 8px;
+            font-family: var(--font-secundaria);
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn-google:hover {
+            background-color: #f7f7f7;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+            color: #333333;
+        }
+
+        .btn-google img {
+            width: 18px;
+            height: 18px;
         }
 
         .link-voltar {
             display: inline-block;
             margin-top: 25px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--verde-profundo);
             text-decoration: none;
             letter-spacing: 0.5px;
-            transition: color 0.3s;
         }
 
         .link-voltar:hover {
@@ -180,31 +239,60 @@
     <div class="login-card">
         <div class="login-header">
             <img src="imagens/WhatsApp_Image_2026-06-06_at_19.58.20-removebg-preview.png" alt="Unaí Logo">
-            <h2>Bem-vindo à Unaí</h2>
-            <p>Conecte-se para gerenciar suas compras e guias</p>
+            <h2>Acesso Unaí</h2>
         </div>
 
-        <div class="input-grupo">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" placeholder="seu-email@exemplo.com" required>
+        <div class="abas-container">
+            <button class="aba ativa" onclick="mudarAba('aba-login')">Entrar</button>
+            <button class="aba" onclick="mudarAba('aba-cadastro')">Cadastrar</button>
         </div>
 
-        <div class="input-grupo">
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" placeholder="Sua senha secreta" required>
+        <div id="aba-login" class="form-conteudo ativo">
+            <div class="input-grupo">
+                <label for="login-email">E-mail</label>
+                <input type="email" id="login-email" placeholder="seu-email@exemplo.com">
+            </div>
+            <div class="input-grupo">
+                <label for="login-senha">Senha</label>
+                <input type="password" id="login-senha" placeholder="Sua senha secreta">
+            </div>
+            <button class="btn-acao" id="btn-entrar">Entrar na Loja</button>
         </div>
 
-        <button class="btn-entrar" id="btn-entrar">Entrar</button>
-        <button class="btn-cadastrar" id="btn-cadastrar">Criar Nova Conta</button>
+        <div id="aba-cadastro" class="form-conteudo">
+            <div class="input-grupo">
+                <label for="cadastro-email">E-mail Comercial</label>
+                <input type="email" id="cadastro-email" placeholder="seu-email@exemplo.com">
+            </div>
+            <div class="input-grupo">
+                <label for="cadastro-senha">Criar Senha</label>
+                <input type="password" id="cadastro-senha" placeholder="Mínimo 6 caracteres">
+            </div>
+            <button class="btn-acao" id="btn-cadastrar">Finalizar Cadastro</button>
+        </div>
 
-        <a href="index.html" class="link-voltar">← Voltar para a loja</a>
+        <div class="divisor">OU</div>
+
+        <button class="btn-google" id="btn-google">
+            <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/web-24dp/copy_of_googleg_穩_rgba_24dp.svg" alt="Google Logo">
+            Continuar com o Google
+        </button>
+
+        <a href="#" class="link-voltar">← Voltar para a vitrine</a>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, 
+            sendEmailVerification,
+            GoogleAuthProvider,
+            signInWithPopup 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // AQUI ESTÁ A SUA CHAVE CORRETA ATUALIZADA:
+        // Sua configuração com a chave validada
         const firebaseConfig = {
             apiKey: "AIzaSyBwksrIQIrDGWQDkqocuNOU2A39lUABOfQ".trim(),
             authDomain: "unai-84956.firebaseapp.com",
@@ -216,55 +304,87 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const provedorGoogle = new GoogleAuthProvider();
 
-        const emailInput = document.getElementById('email');
-        const senhaInput = document.getElementById('senha');
-        const btnEntrar = document.getElementById('btn-entrar');
-        const btnCadastrar = document.getElementById('btn-cadastrar');
+        // Elementos Dinâmicos da Página
+        window.mudarAba = function(idAba) {
+            document.querySelectorAll('.form-conteudo').forEach(f => f.classList.remove('ativo'));
+            document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
+            
+            document.getElementById(idAba).classList.add('ativo');
+            event.target.classList.add('ativa');
+        }
 
-        // AÇÃO: CADASTRAR USUÁRIO
-        btnCadastrar.addEventListener('click', () => {
-            const email = emailInput.value;
-            const senha = senhaInput.value;
-
-            if (!email || !senha) {
-                alert("Por favor, digite um e-mail e uma senha válidos.");
-                return;
-            }
-
-            createUserWithEmailAndPassword(auth, email, senha)
-                .then((userCredential) => {
-                    alert("Conta criada com sucesso! Boas-vindas à Unaí.");
-                    window.location.href = "index.html"; 
-                })
-                .catch((error) => {
-                    if (error.code === 'auth/weak-password') {
-                        alert("A senha precisa ter no mínimo 6 caracteres.");
-                    } else if (error.code === 'auth/email-already-in-use') {
-                        alert("Este e-mail já está cadastrado em outra conta.");
-                    } else {
-                        alert("Erro ao cadastrar: " + error.message);
-                    }
-                });
-        });
-
-        // AÇÃO: EFETUAR LOGIN
-        btnEntrar.addEventListener('click', () => {
-            const email = emailInput.value;
-            const senha = senhaInput.value;
+        // EVENTO: LOGAR COM E-MAIL E SENHA
+        document.getElementById('btn-entrar').addEventListener('click', () => {
+            const email = document.getElementById('login-email').value;
+            const senha = document.getElementById('login-senha').value;
 
             if (!email || !senha) {
-                alert("Por favor, preencha todos os campos.");
+                alert("Por favor, preencha todos os campos para fazer login.");
                 return;
             }
 
             signInWithEmailAndPassword(auth, email, senha)
                 .then((userCredential) => {
-                    alert("Acesso autorizado! Redirecionando...");
-                    window.location.href = "index.html"; 
+                    const user = userCredential.user;
+                    // Verifica se o e-mail real já foi validado pelo link enviado antes
+                    if (!user.emailVerified) {
+                        alert("Atenção: Seu e-mail ainda não foi verificado. Verifique sua caixa de entrada.");
+                    } else {
+                        alert("Bem-vindo de volta à Unaí!");
+                        // window.location.href = "vitrine.html"; (Altere para sua página de destino aqui)
+                    }
                 })
                 .catch((error) => {
-                    alert("Dados incorretos. Verifique o e-mail e a senha digitada.");
+                    alert("Usuário ou senha incorretos. Verifique suas credenciais.");
+                });
+        });
+
+        // EVENTO: CADASTRAR NOVO USUÁRIO + ENVIO DE E-MAIL VERDADEIRO
+        document.getElementById('btn-cadastrar').addEventListener('click', () => {
+            const email = document.getElementById('cadastro-email').value;
+            const senha = document.getElementById('cadastro-senha').value;
+
+            if (!email || !senha) {
+                alert("Por favor, insira um e-mail e crie uma senha válida.");
+                return;
+            }
+
+            createUserWithEmailAndPassword(auth, email, senha)
+                .then((userCredential) => {
+                    // Dispara o link automático de verificação para o e-mail real do usuário
+                    sendEmailVerification(userCredential.user)
+                        .then(() => {
+                            alert("Cadastro realizado! Enviamos um link de confirmação para " + email + ". Por favor, valide sua conta antes do primeiro login.");
+                            mudarAba('aba-login'); // Move o cliente automaticamente para a aba de login
+                        });
+                })
+                .catch((error) => {
+                    if (error.code === 'auth/weak-password') {
+                        alert("A senha de cadastro precisa ter pelo menos 6 caracteres.");
+                    } else if (error.code === 'auth/email-already-in-use') {
+                        alert("Este e-mail já está em uso por outro cliente.");
+                    } else {
+                        alert("Erro no cadastro: " + error.message);
+                    }
+                });
+        });
+
+        // EVENTO: CONECTAR USANDO CONTA DO GOOGLE
+        document.getElementById('btn-google').addEventListener('click', () => {
+            signInWithPopup(auth, provedorGoogle)
+                .then((result) => {
+                    const usuario = result.user;
+                    alert("Acesso autorizado via Google! Olá, " + usuario.displayName);
+                    // window.location.href = "vitrine.html"; (Altere para sua página de destino aqui)
+                })
+                .catch((error) => {
+                    if (error.code === 'auth/popup-closed-by-user') {
+                        alert("A janela de autenticação do Google foi fechada antes de concluir.");
+                    } else {
+                        alert("Erro ao conectar com Google: " + error.message);
+                    }
                 });
         });
     </script>
