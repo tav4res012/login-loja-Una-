@@ -33,7 +33,6 @@
         }
 
         body {
-            /* Fundo fluido em degradê idêntico ao resto do site */
             background: linear-gradient(135deg, var(--bg-dourado) 0%, var(--areia-suave) 50%, var(--bg-bege) 100%);
             background-attachment: fixed;
             color: var(--azul-escuro);
@@ -160,7 +159,6 @@
             background-color: rgba(15, 42, 54, 0.05);
         }
 
-        /* Link para voltar de forma discreta */
         .link-voltar {
             display: inline-block;
             margin-top: 25px;
@@ -180,14 +178,12 @@
 <body>
 
     <div class="login-card">
-        <!-- Cabeçalho com Logo -->
         <div class="login-header">
             <img src="imagens/WhatsApp_Image_2026-06-06_at_19.58.20-removebg-preview.png" alt="Unaí Logo">
             <h2>Bem-vindo à Unaí</h2>
             <p>Conecte-se para gerenciar suas compras e guias</p>
         </div>
 
-        <!-- Formulário -->
         <div class="input-grupo">
             <label for="email">E-mail</label>
             <input type="email" id="email" placeholder="seu-email@exemplo.com" required>
@@ -204,30 +200,23 @@
         <a href="index.html" class="link-voltar">← Voltar para a loja</a>
     </div>
 
-   <!-- ==========================================================================
-       CONEXÃO DE BACK-END CORRIGIDA (SEM BLOQUEIO DE API KEY LOCAL)
-       ========================================================================== -->
     <script type="module">
-        // Importamos apenas o App básico e a Autenticação (A função getAnalytics foi removida para evitar o erro)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // Suas credenciais reais do Firebase
+        // CONFIGURAÇÃO COM A SUA CHAVE EXATA E CORRIGIDA ATUALMENTE:
         const firebaseConfig = {
-            apiKey: "AIzaSyBwksrIQiRDgWQDkqocuNOU2A39LUABOfQ",
+            apiKey: "AIzaSyBwksrIQiRDgWQDkqocuNOU2A39LUABOfQ".trim(),
             authDomain: "unai-84956.firebaseapp.com",
             projectId: "unai-84956",
             storageBucket: "unai-84956.firebasestorage.app",
             messagingSenderId: "487914893461",
             appId: "1:487914893461:web:0e8b97414674e7d9f66b9c"
-            // measurementId removido daqui para liberar o acesso local no navegador
         };
 
-        // Inicializa apenas os serviços essenciais para o login funcionar
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Elementos manipuláveis do formulário
         const emailInput = document.getElementById('email');
         const senhaInput = document.getElementById('senha');
         const btnEntrar = document.getElementById('btn-entrar');
