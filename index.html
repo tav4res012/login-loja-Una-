@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acesso - Unaí</title>
     
+    <!-- Fontes Oficiais da Identidade -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
@@ -242,11 +243,13 @@
             <h2>Acesso Unaí</h2>
         </div>
 
+        <!-- Abas Alternáveis -->
         <div class="abas-container">
             <button class="aba ativa" onclick="mudarAba('aba-login')">Entrar</button>
             <button class="aba" onclick="mudarAba('aba-cadastro')">Cadastrar</button>
         </div>
 
+        <!-- FORMULÁRIO DE LOGIN (ENTRAR) -->
         <div id="aba-login" class="form-conteudo ativo">
             <div class="input-grupo">
                 <label for="login-email">E-mail</label>
@@ -259,6 +262,7 @@
             <button class="btn-acao" id="btn-entrar">Entrar na Loja</button>
         </div>
 
+        <!-- FORMULÁRIO DE CADASTRO -->
         <div id="aba-cadastro" class="form-conteudo">
             <div class="input-grupo">
                 <label for="cadastro-email">E-mail Comercial</label>
@@ -271,6 +275,7 @@
             <button class="btn-acao" id="btn-cadastrar">Finalizar Cadastro</button>
         </div>
 
+        <!-- Seção Integrada com Provedor do Google -->
         <div class="divisor">OU</div>
 
         <button class="btn-google" id="btn-google">
@@ -281,7 +286,11 @@
         <a href="#" class="link-voltar">← Voltar para a vitrine</a>
     </div>
 
+    <!-- ==========================================================================
+       LOGICA E CONEXÕES DO FIREBASE (AUTH E BANCO DE DADOS FIRESTORE)
+       ========================================================================== -->
     <script type="module">
+        // Importações estruturadas incluindo o Firestore (Banco de Dados)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
             getAuth, 
@@ -291,6 +300,11 @@
             GoogleAuthProvider,
             signInWithPopup 
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         // Sua configuração com a chave validada
         const firebaseConfig = {
@@ -302,11 +316,13 @@
             appId: "1:487914893461:web:0e8b97414674e7d9f66b9c"
         };
 
+        // Inicialização dos serviços
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app); // Inicializa o Banco de Dados Firestore
         const provedorGoogle = new GoogleAuthProvider();
 
-        // Elementos Dinâmicos da Página
+        // Elementos Dinâmicos da Página para Alternância de Abas
         window.mudarAba = function(idAba) {
             document.querySelectorAll('.form-conteudo').forEach(f => f.classList.remove('ativo'));
             document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativa'));
@@ -328,12 +344,11 @@
             signInWithEmailAndPassword(auth, email, senha)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    // Verifica se o e-mail real já foi validado pelo link enviado antes
                     if (!user.emailVerified) {
                         alert("Atenção: Seu e-mail ainda não foi verificado. Verifique sua caixa de entrada.");
                     } else {
                         alert("Bem-vindo de volta à Unaí!");
-                        // window.location.href = "vitrine.html"; (Altere para sua página de destino aqui)
+                        // window.location.href = "vitrine.html";
                     }
                 })
                 .catch((error) => {
@@ -341,24 +356,39 @@
                 });
         });
 
-        // EVENTO: CADASTRAR NOVO USUÁRIO + ENVIO DE E-MAIL VERDADEIRO
+        // EVENTO: CADASTRAR NOVO USUÁRIO + SALVAR NO BANCO DE DADOS
         document.getElementById('btn-cadastrar').addEventListener('click', () => {
             const email = document.getElementById('cadastro-email').value;
             const senha = document.getElementById('cadastro-senha').value;
 
             if (!email || !senha) {
-                alert("Por favor, insira um e-mail e crie uma senha válida.");
+                alert("Por favor, insira um e-mail e clique em uma senha válida.");
                 return;
             }
 
             createUserWithEmailAndPassword(auth, email, senha)
                 .then((userCredential) => {
-                    // Dispara o link automático de verificação para o e-mail real do usuário
-                    sendEmailVerification(userCredential.user)
-                        .then(() => {
-                            alert("Cadastro realizado! Enviamos um link de confirmação para " + email + ". Por favor, valide sua conta antes do primeiro login.");
-                            mudarAba('aba-login'); // Move o cliente automaticamente para a aba de login
-                        });
+                    const user = userCredential.user;
+
+                    // SALVANDO NO BANCO DE DADOS: Cria um documento para o cliente usando o UID exclusivo dele
+                    setDoc(doc(db, "clientes", user.uid), {
+                        clienteUid: user.uid,
+                        clienteEmail: email,
+                        criadoEm: new Date().toISOString(),
+                        statusVerificacao: false,
+                        provedor: "email-senha"
+                    })
+                    .then(() => {
+                        // Após salvar no banco, dispara o e-mail de confirmação real
+                        sendEmailVerification(user)
+                            .then(() => {
+                                alert("Cadastro realizado e salvo no banco! Enviamos um link de confirmação para " + email);
+                                mudarAba('aba-login');
+                            });
+                    })
+                    .catch((dbError) => {
+                        console.error("Erro ao salvar perfil no banco de dados: ", dbError);
+                    });
                 })
                 .catch((error) => {
                     if (error.code === 'auth/weak-password') {
@@ -371,13 +401,25 @@
                 });
         });
 
-        // EVENTO: CONECTAR USANDO CONTA DO GOOGLE
+        // EVENTO: CONECTAR USANDO CONTA DO GOOGLE + SALVAR NO BANCO DE DADOS
         document.getElementById('btn-google').addEventListener('click', () => {
             signInWithPopup(auth, provedorGoogle)
                 .then((result) => {
-                    const usuario = result.user;
-                    alert("Acesso autorizado via Google! Olá, " + usuario.displayName);
-                    // window.location.href = "vitrine.html"; (Altere para sua página de destino aqui)
+                    const user = result.user;
+
+                    // SALVANDO NO BANCO DE DADOS: Cria ou atualiza o perfil do cliente vindo do Google
+                    setDoc(doc(db, "clientes", user.uid), {
+                        clienteUid: user.uid,
+                        clienteEmail: user.email,
+                        clienteNome: user.displayName,
+                        criadoEm: new Date().toISOString(),
+                        statusVerificacao: true,
+                        provedor: "google"
+                    }, { merge: true }) // O merge serve para não apagar dados antigos se o usuário logar de novo
+                    .then(() => {
+                        alert("Acesso autorizado via Google e salvo no banco! Olá, " + user.displayName);
+                        // window.location.href = "vitrine.html";
+                    });
                 })
                 .catch((error) => {
                     if (error.code === 'auth/popup-closed-by-user') {
