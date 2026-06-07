@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar - Unaí</title>
+    
+    <!-- Fontes Oficiais da Identidade -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           ESTILIZAÇÃO INTEGRADA À IDENTIDADE DA UNAÍ
+           ========================================================================== */
+        :root {
+            --bg-dourado: #C6A85A;      
+            --bg-bege: #F5F2EC;         
+            --areia-suave: #E8DCC8;     
+            --azul-escuro: #0F2A36;     
+            --verde-profundo: #1F4D4F;  
+            --surface-glass: rgba(245, 242, 236, 0.55); 
+            
+            --font-principal: 'Cinzel', serif;
+            --font-secundaria: 'Montserrat', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* Fundo fluido em degradê idêntico ao resto do site */
+            background: linear-gradient(135deg, var(--bg-dourado) 0%, var(--areia-suave) 50%, var(--bg-bege) 100%);
+            background-attachment: fixed;
+            color: var(--azul-escuro);
+            font-family: var(--font-secundaria);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Card de Login com Efeito de Vidro (Glassmorphism) */
+        .login-card {
+            background: var(--surface-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(15, 42, 54, 0.1);
+            padding: 40px 30px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 15px 35px rgba(15, 42, 54, 0.15);
+            text-align: center;
+        }
+
+        .login-header img {
+            height: 65px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .login-header h2 {
+            font-family: var(--font-principal);
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: var(--azul-escuro);
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .login-header p {
+            font-size: 0.85rem;
+            color: var(--verde-profundo);
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Campos de Entrada */
+        .input-grupo {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .input-grupo label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--azul-escuro);
+        }
+
+        .input-grupo input {
+            width: 100%;
+            height: 48px;
+            padding: 0 16px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(15, 42, 54, 0.15);
+            border-radius: 8px;
+            font-family: var(--font-secundaria);
+            font-size: 0.95rem;
+            color: var(--azul-escuro);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-grupo input:focus {
+            border-color: var(--azul-escuro);
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 0 3px rgba(15, 42, 54, 0.08);
+        }
+
+        /* Botões */
+        .btn-entrar {
+            width: 100%;
+            height: 50px;
+            background-color: var(--azul-escuro);
+            color: var(--bg-bege);
+            border: none;
+            border-radius: 8px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 15px rgba(15, 42, 54, 0.15);
+            margin-bottom: 15px;
+            margin-top: 10px;
+        }
+
+        .btn-entrar:hover {
+            background-color: var(--verde-profundo);
+            transform: translateY(-1px);
+        }
+
+        .btn-cadastrar {
+            width: 100%;
+            height: 50px;
+            background-color: transparent;
+            color: var(--azul-escuro);
+            border: 1px solid var(--azul-escuro);
+            border-radius: 8px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cadastrar:hover {
+            background-color: rgba(15, 42, 54, 0.05);
+        }
+
+        /* Link para voltar de forma discreta */
+        .link-voltar {
+            display: inline-block;
+            margin-top: 25px;
+            font-size: 0.8rem;
+            color: var(--verde-profundo);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+        }
+
+        .link-voltar:hover {
+            color: var(--azul-escuro);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <!-- Cabeçalho com Logo -->
+        <div class="login-header">
+            <img src="imagens/WhatsApp_Image_2026-06-06_at_19.58.20-removebg-preview.png" alt="Unaí Logo">
+            <h2>Bem-vindo à Unaí</h2>
+            <p>Conecte-se para gerenciar suas compras e guias</p>
+        </div>
+
+        <!-- Formulário -->
+        <div class="input-grupo">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="seu-email@exemplo.com" required>
+        </div>
+
+        <div class="input-grupo">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" placeholder="Sua senha secreta" required>
+        </div>
+
+        <button class="btn-entrar" id="btn-entrar">Entrar</button>
+        <button class="btn-cadastrar" id="btn-cadastrar">Criar Nova Conta</button>
+
+        <a href="index.html" class="link-voltar">← Voltar para a loja</a>
+    </div>
+
+   <!-- ==========================================================================
+       CONEXÃO DE BACK-END CORRIGIDA (SEM BLOQUEIO DE API KEY LOCAL)
+       ========================================================================== -->
+    <script type="module">
+        // Importamos apenas o App básico e a Autenticação (A função getAnalytics foi removida para evitar o erro)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // Suas credenciais reais do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBwksrIQiRDgWQDkqocuNOU2A39LUABOfQ",
+            authDomain: "unai-84956.firebaseapp.com",
+            projectId: "unai-84956",
+            storageBucket: "unai-84956.firebasestorage.app",
+            messagingSenderId: "487914893461",
+            appId: "1:487914893461:web:0e8b97414674e7d9f66b9c"
+            // measurementId removido daqui para liberar o acesso local no navegador
+        };
+
+        // Inicializa apenas os serviços essenciais para o login funcionar
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Elementos manipuláveis do formulário
+        const emailInput = document.getElementById('email');
+        const senhaInput = document.getElementById('senha');
+        const btnEntrar = document.getElementById('btn-entrar');
+        const btnCadastrar = document.getElementById('btn-cadastrar');
+
+        // AÇÃO: CADASTRAR USUÁRIO
+        btnCadastrar.addEventListener('click', () => {
+            const email = emailInput.value;
+            const senha = senhaInput.value;
+
+            if (!email || !senha) {
+                alert("Por favor, digite um e-mail e uma senha válidos.");
+                return;
+            }
+
+            createUserWithEmailAndPassword(auth, email, senha)
+                .then((userCredential) => {
+                    alert("Conta criada com sucesso! Boas-vindas à Unaí.");
+                    window.location.href = "index.html"; 
+                })
+                .catch((error) => {
+                    if (error.code === 'auth/weak-password') {
+                        alert("A senha precisa ter no mínimo 6 caracteres.");
+                    } else if (error.code === 'auth/email-already-in-use') {
+                        alert("Este e-mail já está cadastrado em outra conta.");
+                    } else {
+                        alert("Erro ao cadastrar: " + error.message);
+                    }
+                });
+        });
+
+        // AÇÃO: EFETUAR LOGIN
+        btnEntrar.addEventListener('click', () => {
+            const email = emailInput.value;
+            const senha = senhaInput.value;
+
+            if (!email || !senha) {
+                alert("Por favor, preencha todos os campos.");
+                return;
+            }
+
+            signInWithEmailAndPassword(auth, email, senha)
+                .then((userCredential) => {
+                    alert("Acesso autorizado! Redirecionando...");
+                    window.location.href = "index.html"; 
+                })
+                .catch((error) => {
+                    alert("Dados incorretos. Verifique o e-mail e a senha digitada.");
+                });
+        });
+    </script>
+</body>
+</html>
